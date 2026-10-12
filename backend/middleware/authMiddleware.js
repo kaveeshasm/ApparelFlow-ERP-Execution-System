@@ -2,7 +2,16 @@ const jwt = require("jsonwebtoken");
 
 function authenticateToken(req, res, next) {
   try {
-    const token = req.cookies.token;
+    if (!process.env.JWT_SECRET) {
+      console.error("JWT_SECRET is not configured");
+
+      return res.status(500).json({
+        success: false,
+        message: "Server configuration error",
+      });
+    }
+
+    const token = req.cookies?.token;
 
     if (!token) {
       return res.status(401).json({
@@ -11,7 +20,10 @@ function authenticateToken(req, res, next) {
       });
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(
+      token,
+      process.env.JWT_SECRET
+    );
 
     req.user = {
       id: decoded.userId,

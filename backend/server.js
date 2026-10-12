@@ -25,6 +25,20 @@ app.get("/test", (req, res) => {
 });
 
 app.use("/", require("./routes/authRoutes"));
+app.use("/recipes", require("./routes/recipeRoutes"));
+app.use("/recipes", require("./routes/recipeRoutes"));
+
+app.use(
+  "/cutting-orders",
+  require("./routes/cuttingOrderRoutes")
+);
+
+app.use(
+  "/verification",
+  require("./routes/verificationRoutes")
+);
+
+app.use("/sewing-queue", require("./routes/sewingQueueRoutes"));
 
 const PORT = process.env.PORT || 9090;
 
