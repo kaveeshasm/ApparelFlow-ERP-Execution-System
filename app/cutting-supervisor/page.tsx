@@ -24,7 +24,7 @@ interface CuttingOrder {
   created_at?: string;
 }
 
-const API_URL = "http://localhost:9090";
+const API_URL = "/api";
 
 export default function CuttingSupervisorPage() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);

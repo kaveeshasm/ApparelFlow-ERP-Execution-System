@@ -68,7 +68,7 @@ export default function LogIn() {
 
   const testBackendConnection = async () => {
     try {
-      const response = await fetch("http://localhost:9090/test");
+      const response = await fetch("/api/test");
 
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}`);
@@ -121,7 +121,7 @@ export default function LogIn() {
 
     try {
       const response = await fetch(
-        "http://localhost:9090/login",
+        "/api/login",
         {
           method: "POST",
           headers: {

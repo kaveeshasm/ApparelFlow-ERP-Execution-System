@@ -4,7 +4,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-const API_URL = "http://localhost:9090";
+const API_URL = "/api";
 
 type ComponentVariance = {
   component_name: string;

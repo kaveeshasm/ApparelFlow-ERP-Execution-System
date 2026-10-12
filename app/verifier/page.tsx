@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-const API_URL = "http://localhost:9090";
+const API_URL = "/api";
 
 interface VerificationComponent {
   verification_item_id: number;
