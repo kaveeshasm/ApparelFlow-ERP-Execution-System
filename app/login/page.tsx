@@ -184,6 +184,11 @@ export default function LogIn() {
 
             const data = await response.json();
 
+            if (!response.ok) {
+                setError(data.message || `Login failed (HTTP ${response.status})`);
+                return;
+            }
+
             if (data.success) {
                 const currentTime =
                     new Date().toISOString();
@@ -195,65 +200,28 @@ export default function LogIn() {
                 };
 
                 const userData = {
-                    email: data.data.email,
-                    username: data.data.username,
-                    picture:
-                        data.data.profile?.picture || null,
-                    bio:
-                        data.data.profile?.bio || null,
-                    location:
-                        data.data.profile?.location || null,
-                    phoneNumber:
-                        data.data.profile?.phoneNumber || null,
+                    id: data.user.id,
+                    email: data.user.email,
+                    fullName: data.user.full_name,
+                    role: data.user.role,
                     loginTime: currentTime,
                     authMethod: "local",
                 };
 
-                localStorage.setItem(
-                    "authData",
-                    JSON.stringify(authData)
-                );
-
-                localStorage.setItem(
-                    "userData",
-                    JSON.stringify(userData)
-                );
+                localStorage.setItem("authData", JSON.stringify(authData));
+                localStorage.setItem("userData", JSON.stringify(userData));
 
                 if (rememberMe) {
-                    localStorage.setItem(
-                        "rememberedEmail",
-                        loginData.email
-                    );
+                    localStorage.setItem("rememberedEmail", loginData.email);
                 } else {
-                    localStorage.removeItem(
-                        "rememberedEmail"
-                    );
+                    localStorage.removeItem("rememberedEmail");
                 }
 
-                sessionStorage.setItem(
-                    "userEmail",
-                    data.data.email
-                );
-
-                sessionStorage.setItem(
-                    "username",
-                    data.data.username
-                );
-
-                sessionStorage.setItem(
-                    "userPicture",
-                    data.data.profile?.picture || ""
-                );
-
-                sessionStorage.setItem(
-                    "isLoggedIn",
-                    "true"
-                );
-
-                sessionStorage.setItem(
-                    "loginTime",
-                    currentTime
-                );
+                sessionStorage.setItem("userEmail", data.user.email);
+                sessionStorage.setItem("username", data.user.full_name);
+                sessionStorage.setItem("userRole", data.user.role);
+                sessionStorage.setItem("isLoggedIn", "true");
+                sessionStorage.setItem("loginTime", currentTime);
 
                 router.replace("/user");
             } else {
