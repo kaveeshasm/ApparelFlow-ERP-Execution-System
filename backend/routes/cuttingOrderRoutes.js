@@ -67,7 +67,7 @@ router.post(
       target_qty,
       fabric_roll_id,
       actual_fabric_yds,
-    } = req.body;
+    } = req.body || {};
 
     // Validate recipe ID
     if (!Number.isInteger(recipe_id) || recipe_id <= 0) {
